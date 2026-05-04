@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+/data
+# keep only the README screenshot; ignore generated test shots
+/screenshots/*.png
+!/screenshots/trip.png
+/scripts/screenshot.mjs

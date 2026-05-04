@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# partly
 
-## Getting Started
+Dead-simple trip expense splitting for 2–5 people. No accounts, no logins — just a shareable link.
 
-First, run the development server:
+![partly screenshot](screenshots/trip.png)
+
+## Features
+
+- Create a trip and get a permanent URL to share with your group
+- Auto-generated pseudonyms (e.g. "Swift Panda", "Brave Otter") — rename them to your real names
+- Add expenses: who paid, how much, what for, which date
+- Negative amounts for refunds
+- Edit or delete any expense, with 5-second undo
+- Settlement view showing the minimum transfers to square up
+- Optional trip name and start/end dates
+- Trips auto-delete 60 days after creation
+- Anyone with the link can view and edit — no passwords
+
+## Getting started
+
+**Requirements:** Node.js 18+
 
 ```bash
+git clone https://github.com/YOUR_USERNAME/partly.git
+cd partly
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Data is stored in a local SQLite file at `data/partly.db`, created automatically on first run.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Running in production
 
-## Learn More
+```bash
+npm run build
+npm start
+```
 
-To learn more about Next.js, take a look at the following resources:
+The `data/` directory must be writable and persisted between deploys (it is gitignored).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Next.js 16](https://nextjs.org/) — App Router, API routes
+- [Tailwind CSS v4](https://tailwindcss.com/)
+- [better-sqlite3](https://github.com/WiseLibs/better-sqlite3) — embedded SQLite, no database setup needed
