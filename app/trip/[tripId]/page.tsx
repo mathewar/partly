@@ -76,6 +76,9 @@ export default function TripPage({ params }: { params: Promise<{ tripId: string 
   // Copy
   const [copied, setCopied] = useState(false);
 
+  // Add person (on behalf of someone else)
+  const [addingPerson, setAddingPerson] = useState(false);
+
   const loadData = useCallback(async () => {
     const res = await fetch(`/api/trips/${tripId}`);
     if (res.status === 404) { setNotFound(true); return; }
@@ -120,6 +123,13 @@ export default function TripPage({ params }: { params: Promise<{ tripId: string 
     localStorage.setItem(`partly_${tripId}`, JSON.stringify({ participantId: j.participantId, pseudonym: j.pseudonym }));
     setMyId(j.participantId); setMyName(j.pseudonym); setPaidBy(j.participantId);
     await loadData(); setJoining(false);
+  }
+
+  async function addPerson() {
+    setAddingPerson(true);
+    const res = await fetch(`/api/participants/${tripId}`, { method: 'POST' });
+    if (!res.ok) { alert((await res.json() as { error: string }).error); setAddingPerson(false); return; }
+    await loadData(); setAddingPerson(false);
   }
 
   async function addExpense(e: React.FormEvent) {
@@ -335,18 +345,30 @@ export default function TripPage({ params }: { params: Promise<{ tripId: string 
     </div>
   );
 
-  const PeopleCard = participants.length > 0 && (
+  const PeopleCard = (
     <div className="bg-white border border-stone-200 rounded-xl px-4 py-3">
-      <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">
-        People <span className="normal-case font-normal">({participants.length}/5)</span>
-      </p>
-      <div className="flex flex-wrap gap-1.5">
-        {participants.map(p => (
-          <span key={p.id} className={`text-xs px-2.5 py-1 rounded-full border font-medium ${color(p.id).pill}`}>
-            {p.pseudonym}
-          </span>
-        ))}
+      <div className="flex items-center justify-between mb-2.5">
+        <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider">
+          People <span className="normal-case font-normal">({participants.length}/5)</span>
+        </p>
+        {participants.length < 5 && (
+          <button onClick={addPerson} disabled={addingPerson}
+            className="text-xs text-stone-500 hover:text-stone-800 disabled:opacity-50 transition-colors">
+            {addingPerson ? 'Adding…' : '+ Add person'}
+          </button>
+        )}
       </div>
+      {participants.length > 0 ? (
+        <div className="flex flex-wrap gap-1.5">
+          {participants.map(p => (
+            <span key={p.id} className={`text-xs px-2.5 py-1 rounded-full border font-medium ${color(p.id).pill}`}>
+              {p.pseudonym}
+            </span>
+          ))}
+        </div>
+      ) : (
+        <p className="text-xs text-stone-400">No one has joined yet.</p>
+      )}
     </div>
   );
 

@@ -2,6 +2,22 @@
 
 Dead-simple trip expense splitting for 2–5 people. No accounts, no logins — just a shareable link.
 
+## Why partly?
+
+Most expense-splitting apps make you create an account, install an app, or invite friends via email before you can record a single expense. partly gets out of the way:
+
+| | **partly** | Splitwise | Tricount | Settle Up |
+|---|---|---|---|---|
+| Account required | No | Yes | No | Yes |
+| Mobile app required | No | Optional | Yes | Yes |
+| Works in any browser | Yes | Yes | No | No |
+| Share via link only | Yes | No | No | No |
+| Auto-deletes old data | Yes (60 days) | No | No | No |
+| Self-hostable | Yes | No | No | No |
+| Free | Yes | Freemium | Freemium | Freemium |
+
+**The tradeoff:** partly is intentionally minimal. It has no push notifications, no currency conversion, no recurring expenses, and no long-term history. If you need those things, Splitwise is a solid choice. If you just want to split a weekend trip without the overhead, partly is for you.
+
 ![partly screenshot](screenshots/trip.png)
 
 ## Features
